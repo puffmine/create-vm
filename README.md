@@ -82,11 +82,11 @@ documentation on for cloud-init.
 
 `create-vm` stores files as follows:
 
-* `${VM_IMAGE_DIR}` - Directory used for for VM storage. Defaults to `${HOME}/vms/virsh`.
-* `${VM_IMAGE_DIR}/base/` - Place to store your base Linux cloud images.
-* `${VM_IMAGE_DIR}/images/` - `your-vm-name.img` and `your-vm-name-cidata.img` files.
-* `${VM_IMAGE_DIR}/init/` - `user-data` and `meta-data`.
-* `${VM_IMAGE_DIR}/xml/` - Backup copies of your VMs' XML definition files.
+* `${VM_IMAGE_DIR}` - Directory used for for VM storage. Defaults to
+  `/var/lib/libvirt/images`. Base cloud image will be placed in here too.
+* `${VM_IMAGE_DIR}/{hostname}-{xxxxxxxx}/` - Place to store vm.img, cidata.img,
+  user-data, meta-data and backup of xml. The `xxxxxxxx` is a 8-digit randum
+  characters to make unique VM name based on the hostname.
 
 QCOW2 filesystems allocate space as needed, so if you create a VM with 100GB of storage, the initial
 size of the `your-vm-name.img` and `your-vm-name-cidata.img` files is only about **700K total**. The
