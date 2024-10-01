@@ -15,6 +15,9 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 
+# To avoid the need for 'sudo virsh'
+export LIBVIRT_DEFAULT_URI=qemu:///system
+
 # Set VM_IMAGE_DIR environment variable to override default storage location for VMs
 VM_IMAGE_DIR=${VM_IMAGE_DIR:-"/var/lib/libvirt/images"}
 
