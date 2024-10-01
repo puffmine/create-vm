@@ -169,8 +169,7 @@ virt-install \
     --force \
     --watchdog=default \
     --graphics vnc,listen=0.0.0.0 \
-    --noautoconsole \
-    --debug
+    --autoconsole text
 
 # Make a backup of the VM's XML definition file
 virsh dumpxml "${HOSTNAME}" > "${VM_IMAGE_DIR}/${HOSTNAME}/${HOSTNAME}.xml"
