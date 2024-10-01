@@ -56,7 +56,10 @@ while getopts "h:n:i:k:r:c:s:b:m:v" option; do
             usage
             exit 0
             ;;
-        n) HOSTNAME=${OPTARG};;
+        n) HOSTNAME=${OPTARG}
+	    RND8=$(tr -dc a-z </dev/urandom | head -c 8)
+	    HOSTNAME="${HOSTNAME}-${RND8}"
+	    ;;
         i) IMG_FQN=${OPTARG};;
         k) AUTH_KEYS_FQN=${OPTARG};;
         r) RAM=${OPTARG};;
