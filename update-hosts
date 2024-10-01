@@ -1,0 +1,22 @@
+#!/bin/bash
+#
+# This script uses tcpdump to find out the IP address for a specific VM based
+# on it's mac address. It is particulary useful when the get-vm-ip script
+# doesn't work, where IP address is not detected by arp command.
+
+# To avoid the need for 'sudo virsh'
+export LIBVIRT_DEFAULT_URI=qemu:///system
+
+declare -a names=( $(virsh list --name|grep -v "^$") )
+
+for name in ${names[@]}
+do
+  hwaddr=$(virsh domiflist $name|grep vnet|awk '{print $5}')
+  ipaddr=$(sudo tcpdump -qn -i br0 -c 1 ether src $hwaddr 2>/dev/null|awk '{print $3}')
+  ipaddr=${ipaddr%.[0-9]*}
+  ssh-keygen -R $name &>/dev/null
+  ssh-keygen -R $ipaddr &>/dev/null
+  sudo sed -ie "/$name/d" /etc/hosts
+  echo -ne "$ipaddr\t$name\t# $hwaddr\n" | sudo tee -a /etc/hosts
+  ssh-keyscan -H $name 2>/dev/null >> ~/.ssh/known_hosts
+done
