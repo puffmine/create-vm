@@ -125,9 +125,11 @@ cat > "$VM_IMAGE_DIR/${HOSTNAME}/user-data" << EOF
 users:
   - name: ansible
     sudo: ["ALL=(ALL) NOPASSWD:ALL"]
-    groups: sudo
+    gecos: puff
+    groups: sudo, adm
     shell: /bin/bash
-    homedir: /var/ansible
+    lock_passwd: False
+    passwd: $6$aaa$AFOeq28ClCYqxTAJeUJnS/RlE9e.b/IvY4EnHZjD3DKhQHKoLpplZtm6Uo8K2zXVETTjCDepE2FpXzi8dfUNg0
     ssh_authorized_keys:
 EOF
 
