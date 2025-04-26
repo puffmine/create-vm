@@ -122,6 +122,7 @@ echo "Creating user-data file $VM_IMAGE_DIR/${HOSTNAME}/user-data"
 cat > "$VM_IMAGE_DIR/${HOSTNAME}/user-data" << 'EOF'
 #cloud-config
 
+timezone: Asia/Seoul
 users:
   - name: ansible
     sudo: ["ALL=(ALL) NOPASSWD:ALL"]
